@@ -1,0 +1,67 @@
+module BCDto7SegDisplay(
+    input wire [15:0] switches, //this is like SW i think not to sure the syntax but there are 16 switches
+    output wire [6:0] HEX3, //did this from 0-6, so it can represent on the 7 segment display for each hex 
+    output wire [6:0] HEX2,//so like like A will be MSB and G will be MSB
+    output wire [6:0] HEX1,//used "wire" - allows data to flow between different modules 
+    output wire [6:0] HEX0
+);
+
+    wire [3:0] bcd3, bcd2, bcd1, bcd0;
+    
+    // BCD conversion for each digit
+    assign bcd3 = switches[15:12]; //so  here each four switches represents one single hex character
+    assign bcd2 = switches[11:8]; // like for each if switches 8,9 were on, that would be 0011
+    assign bcd1 = switches[7:4]; // whcih would be 3 and then following down it would illuminate A,B,G,C,D
+    assign bcd0 = switches[3:0];
+    
+    // 7-Segment display patterns for digits 0 to 9
+    assign HEX3 = (bcd3 == 4'b0000) ? 7'b0111111: //0
+                 (bcd3 == 4'b0001) ? 7'b0000110:  //1
+                 (bcd3 == 4'b0010) ? 7'b1011011:  //2
+                 (bcd3 == 4'b0011) ? 7'b0100111:   //3
+                 (bcd3 == 4'b0100) ? 7'b1100110:   //4
+                 (bcd3 == 4'b0101) ? 7'b1101101:
+                 (bcd3 == 4'b0110) ? 7'b1111101:
+                 (bcd3 == 4'b0111) ? 7'b0000111:
+                 (bcd3 == 4'b1000) ? 7'b1111111:
+                 (bcd3 == 4'b1001) ? 7'b1101111:
+                 7'b0000000;
+    
+    assign HEX2 = (bcd3 == 4'b0000) ? 7'b0111111: 
+                (bcd3 == 4'b0001) ? 7'b0000110:  
+                (bcd3 == 4'b0010) ? 7'b1011011:  
+                (bcd3 == 4'b0011) ? 7'b0100111:   
+                (bcd3 == 4'b0100) ? 7'b1100110:   
+                (bcd3 == 4'b0101) ? 7'b1101101:
+                (bcd3 == 4'b0110) ? 7'b1111101:
+                (bcd3 == 4'b0111) ? 7'b0000111:
+                (bcd3 == 4'b1000) ? 7'b1111111:
+                (bcd3 == 4'b1001) ? 7'b1101111:
+                7'b0000000;
+    
+    assign HEX1 = (bcd1 == 4'b0000) ? 7'b0011111:
+                (bcd3 == 4'b0000) ? 7'b0111111: 
+                (bcd3 == 4'b0001) ? 7'b0000110:  
+                (bcd3 == 4'b0010) ? 7'b1011011:  
+                (bcd3 == 4'b0011) ? 7'b0100111:   
+                (bcd3 == 4'b0100) ? 7'b1100110:   
+                (bcd3 == 4'b0101) ? 7'b1101101:
+                (bcd3 == 4'b0110) ? 7'b1111101:
+                (bcd3 == 4'b0111) ? 7'b0000111:
+                (bcd3 == 4'b1000) ? 7'b1111111:
+                (bcd3 == 4'b1001) ? 7'b1101111:
+                7'b0000000;
+    
+    assign HEX0 = (bcd3 == 4'b0000) ? 7'b0111111:
+                (bcd3 == 4'b0001) ? 7'b0000110:  
+                (bcd3 == 4'b0010) ? 7'b1011011:  
+                (bcd3 == 4'b0011) ? 7'b0100111:   
+                (bcd3 == 4'b0100) ? 7'b1100110:   
+                (bcd3 == 4'b0101) ? 7'b1101101:
+                (bcd3 == 4'b0110) ? 7'b1111101:
+                (bcd3 == 4'b0111) ? 7'b0000111:
+                (bcd3 == 4'b1000) ? 7'b1111111:
+                (bcd3 == 4'b1001) ? 7'b1101111:
+                7'b0000000;
+
+endmodule
