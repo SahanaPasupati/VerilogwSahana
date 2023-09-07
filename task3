@@ -1,0 +1,28 @@
+module assignment1(SW, LEDR, LEDG);
+	input [8:0] SW;
+	output [8:0] LEDR;
+	output [4:0] LEDG;
+	wire c1, c2, c3;
+	
+	assign LEDR[0] = SW[0];
+	assign LEDR[1] = SW[1];
+	assign LEDR[2] = SW[2];
+	assign LEDR[3] = SW[3];
+	assign LEDR[4] = SW[4];
+	assign LEDR[5] = SW[5];
+	assign LEDR[6] = SW[6];
+	assign LEDR[7] = SW[7];
+	assign LEDR[8] = SW[8];
+	
+	fullAdder U1(SW[4], SW[0], SW[8], LEDG[0], c1);
+	fullAdder U2(SW[5], SW[1], c1, LEDG[1], c2);
+	fullAdder U3(SW[6], SW[2], c2, LEDG[2], c3);
+	fullAdder U4(SW[7], SW[3], c3, LEDG[3], LEDG[4]);
+endmodule
+
+module fullAdder (a, b, cin, s, cout);
+	input a, b, cin;
+	output s, cout;
+	assign s = a ^ b ^ cin;
+	assign cout = a&b | a&c | b&c;
+endmodule
